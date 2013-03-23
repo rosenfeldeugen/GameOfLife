@@ -59,6 +59,8 @@
 		/* END event binding */
 	});  /* END document ready*/
 
+    // It seems currentState keeps the state of the board/universe
+    // It should be named more descriptive.
 	var currentState;
 
 	function reset() {
