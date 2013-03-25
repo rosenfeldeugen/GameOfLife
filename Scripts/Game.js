@@ -59,28 +59,34 @@
 		/* END event binding */
 	});  /* END document ready*/
 
-	var currentState;
+	var board;
 
-	function reset() {
-		localStorage.lastState = currentState = [];
+    function clearBoard() {
+        localStorage.lastBoard = board = [];
+    }
+
+    function saveBoard() {
+        localStorage.lastBoard = JSON.stringify(board);
+    }
+
+    function loadBoard() {
+        board = localStorage.lastBoard ? JSON.parse(localStorage.lastBoard) : [];
+    }
+
+    function reset() {
+		clearBoard();
 		drawBoard();
 	}
 
-	function restore() {
-		currentState = localStorage.lastState ? JSON.parse(localStorage.lastState) : [];
+    function restore() {
+		loadBoard();
 		drawBoard();
 	}
 
 	var worker;
 
-	function stop() {
-		activateGameStoppedState();
-		worker.terminate();
-		storeLastState();
-	}
-
 	function start() {
-		if (currentState.length == 0)
+		if (board.length == 0)
 			return;
 
 		activateGamePlayingState();
@@ -89,19 +95,21 @@
 		worker.onmessage = nextStateReceived;
 
 		worker.postMessage({
-			currentState: currentState,
+			currentState: board,
 			speed: 500
 		});
 	}
-	
-	function storeLastState() {
-		localStorage.lastState = JSON.stringify(currentState);
-	}
+
+    function stop() {
+        activateGameStoppedState();
+        worker.terminate();
+        saveBoard();
+    }
 
 	function nextStateReceived(event) {
-		currentState = event.data.nextState;
+		board = event.data.nextState;
 
-		if (currentState.length == 0) { 
+		if (board.length == 0) { 
 			stop();
 		}
 
@@ -113,16 +121,16 @@
 			Math.floor((event.pageX - event.target.offsetLeft) / ui.squareSize),
 			Math.floor((event.pageY - event.target.offsetTop) / ui.squareSize));
 		
-		var index = cell.getIndex(currentState);
+		var index = cell.getIndex(board);
 		if (index == -1) {
-			currentState.push(cell);
+			board.push(cell);
 			drawAliveCell(cell);
 		} else {
-			currentState.splice(index, 1);
+			board.splice(index, 1);
 			drawDeadCell(cell);
 		}
 
-		storeLastState();
+		saveBoard();
 	}
 
 	function toggleBoxOrientation() {
@@ -171,7 +179,7 @@
 	function drawBoard() {
 		drawGridLines();
 
-		if (currentState && currentState.length > 0) {
+		if (board && board.length > 0) {
 			populateGrid();
 		}
 	}
@@ -185,9 +193,9 @@
 	}
 
 	function populateGrid() {
-		for (var i = 0; i < currentState.length; i++) {
-			if (currentState[i].x < ui.boardWidth || currentState[i].y < ui.boardHeight) {
-				drawAliveCell(currentState[i]);
+		for (var i = 0; i < board.length; i++) {
+			if (board[i].x < ui.boardWidth || board[i].y < ui.boardHeight) {
+				drawAliveCell(board[i]);
 			}
 		}
 	}

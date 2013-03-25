@@ -1,0 +1,13 @@
+Code review notes:
+
+- some of the names not too clear (currentState, changed it to board)
+- Game.js has too many responsibilities:
+    - saving/loading the board
+    - handling both board update and drawing the cell when a cell is toggled
+    - dealing with the worker
+
+
+Some ideas:
+- create a separate class for the board
+- don't let the cell find out it's neighbours, the board should do that
+- drop the worker idea (it failed to work on my chrome)
