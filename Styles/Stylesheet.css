@@ -15,15 +15,28 @@ canvas
 	margin: 6px;
 }
 
+    canvas.zooming {
+        cursor: url(../Images/magnifier_32.png) 0 0, default;
+    }
+
+    canvas.drawing {
+        cursor: url(../Images/pencil_32.png) 0 30, pointer;
+    }
+
 button {
 	width: 48px;
 	height: 48px;
-	border: 0 solid;
-	margin: 8px;
+	border: 2px hidden;
+	margin: 16px;
+    cursor: pointer;
 }
 
     button[disabled] {
         opacity: 0.2;
+    }
+
+    button.active {
+        border: 2px dashed hsla(0, 0%, 0%, 0.5);
     }
 
 #content {
@@ -112,13 +125,26 @@ button {
 	background: url(../Images/info.png);
 }
 
+.draw {
+    background: url(../Images/pencil.png);
+}
+
+.zoomIn {
+    background: url(../Images/magnifier.png), url(../Images/plus_16.png) no-repeat left bottom;
+}
+
+.zoomOut {
+    background: url(../Images/magnifier.png), url(../Images/minus_16.png) no-repeat left bottom;
+}
+
 #error {
 	background: rgba(174, 44, 76, 0.5) url(../Images/danger_sign.png) no-repeat left center;
 	color: #DEFA70;
 	position: absolute;
-	padding: 1.2em 64px 1.2em;
-	top: 40%;
-	left: 10%;
+	top: 45%;
+    left: 12em;
+    right: 12em;
+    padding: 1.2em 64px 1.2em;
 	-ms-border-radius: 16px;
 	-moz-border-radius: 16px;
 	-o-border-radius: 16px;
