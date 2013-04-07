@@ -1,6 +1,10 @@
-This is an implementation of Conway`s Game of Life (see http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) as a HTML 5 web application.
+Conway's Game of Life
+---------------------
 
-Current Implementation:
+This is an implementation of Conway's Game of Life (see http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) as a HTML 5 web application.
+
+Current Implementation
+----------------------
 
 As the description says, the game space is infinite. Although we have a fix sized board with no possibility yet to go outside of its borders, cells can also live beyond the space displayed to us.
 
@@ -8,7 +12,8 @@ The user can select/deselect each cell in the grid to be alive by clicking them.
 
 This application only runs in browsers with canvas, local storage and web workers support (minimum version: IE 10, Firefox 3.5, Chrome 3, Safari 4, Opera 10.6).	
 
-Some further next steps:
+Some further next steps
+-----------------------
 
 - Zoom in/out and scroll in order to show outside elements
 
