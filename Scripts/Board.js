@@ -99,9 +99,9 @@ Board.prototype.zoom = function (type, cell) {
 	}
 
 	this.settings.squareSize += type * this.settings.zoomFactor;
-	this.translateElements(type, cell);
 	this.width = this.canvas.width / this.settings.squareSize;
 	this.height = this.canvas.height / this.settings.squareSize;
+	this.translateElements(cell);
 	this.draw();
 };
 
@@ -113,11 +113,11 @@ Board.prototype.isZoomable = function (type) {
 	return this.settings.squareSize < (this.canvas.width / 4) && this.settings.squareSize < (this.canvas.height / 4);
 };
 
-Board.prototype.translateElements = function (type, cell) {
-	var shiftHorizontally = type * Math.abs(Math.floor(this.width/2) - cell.x);
-	var shiftVertically = type * Math.abs(Math.floor(this.height/2) - cell.y);
+Board.prototype.translateElements = function (cell) {
+	var shiftHorizontally = Math.floor(this.width/2) - cell.x;
+	var shiftVertically = Math.floor(this.height/2) - cell.y;
 	this.state.forEach(function (elem) {
-		elem.x -= shiftHorizontally;
-		elem.y -= shiftVertically;
+		elem.x += shiftHorizontally;
+		elem.y += shiftVertically;
 	});
 };
