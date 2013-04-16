@@ -2,6 +2,7 @@
 	this.settings = settings;
 	this.canvas = canvas;
 	this.drawingContext = canvas.getContext('2d');
+	this.isDrawing = false;
 
 	try {
 		this.load();
@@ -27,6 +28,14 @@ Board.prototype.draw = function () {
 
 	if (this.state && this.state.length > 0) {
 		this.populateGrid();
+	}
+};
+
+Board.prototype.drawCell = function (cell, isAlive) {
+	if (isAlive) {
+		this.add(cell);
+	} else {
+		this.remove(cell);
 	}
 };
 
@@ -80,17 +89,19 @@ Board.prototype.drawDeadCell = function (cell) {
 	this.drawingContext.stroke();
 };
 
-Board.prototype.togglePopulationMember = function (cell) {
-	var index = cell.getIndex(this.state);
-	if (index == -1) {
+Board.prototype.add = function (cell) {
+	if (cell.getIndex(this.state) == -1) {
 		this.state.push(cell);
 		this.drawAliveCell(cell);
-	} else {
+	}
+};
+
+Board.prototype.remove = function (cell) {
+	var index = cell.getIndex(this.state);
+	if (index > -1) {
 		this.state.splice(index, 1);
 		this.drawDeadCell(cell);
 	}
-
-	this.save();
 };
 
 Board.prototype.zoom = function (type, cell) {
@@ -120,4 +131,23 @@ Board.prototype.translateElements = function (cell) {
 		elem.x += shiftHorizontally;
 		elem.y += shiftVertically;
 	});
+};
+
+Board.prototype.startDrawing = function (cell, isAlive) {
+	this.isDrawing = true;
+	this.drawCell(cell, isAlive);
+};
+
+Board.prototype.drawAdjacentCells = function (cell, isAlive) {
+	if (this.isDrawing) {
+		this.drawCell(cell, isAlive);
+	}
+};
+
+Board.prototype.stopDrawing = function (cell, isAlive) {
+	if (this.isDrawing) {
+		this.drawCell(cell, isAlive);
+	}
+	this.save();
+	this.isDrawing = false;
 };

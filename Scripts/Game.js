@@ -3,7 +3,8 @@
 	var board;
 	var worker;
 	var ui;
-	var isPlaying = false;
+	var crtControlStateFunction;
+	var isEvolving = false;
 	var messages = {
 		goToGameInfo: 'See game description',
 		start: 'Start evolution from current state',
@@ -29,9 +30,9 @@
 			error: $('#error'),
 			info: $('#info'),
 			draw: $('#draw'),
+			erase: $('#erase'),
 			zoomIn: $('#zoomIn'),
-			zoomOut: $('#zoomOut'),
-			crtBoardEventHandler: togglePopulationMember
+			zoomOut: $('#zoomOut')
 		};
 
 		board = new Board(ui.board[0], { squareSize: 18, zoomFactor: 3, gridColor: 'hsla(0, 0%, 0%, 0.2)', fillColor: 'hsla(0, 0%, 0%, 0.4)'});
@@ -67,6 +68,10 @@
 			activateDraw();
 		});
 
+		ui.erase.bind('click', function () {
+			activateErase();
+		});
+
 		ui.zoomIn.bind('click', function () {
 			activateZoomIn();
 		});
@@ -97,12 +102,12 @@
 		if (board.state.length == 0)
 			return;
 
-		activateGamePlayingState();
+		activateEvolutionState();
 		startWorker();
 	}
 
 	function stop() {
-		activateGameStoppedState();
+		activateEvolutionStoppedState();
 		worker.terminate();
 		board.save();
 	}
@@ -141,40 +146,54 @@
 	}
 
 	function bindBoardClickEvent(handler) {
-		ui.board.unbind('click');
+		ui.board.unbind();
 		ui.board.bind('click', function (event) {
 			handler(event);
 		});
 		ui.crtBoardEventHandler = handler;
 	}
 
-	function getClickSourceCell(event) {
-		return new Cell(
-			Math.floor((event.pageX - event.target.offsetLeft) / board.settings.squareSize),
-			Math.floor((event.pageY - event.target.offsetTop) / board.settings.squareSize));
-	}
+	function bindDrawingHandler(isDrawing) {
 
-	function togglePopulationMember(event) {
-		var cell = getClickSourceCell(event);
-		board.togglePopulationMember(cell);
+		ui.board.bind('mousedown', function (event) {
+			board.startDrawing(getSourceCell(event), isDrawing);
+		});
+
+		ui.board.bind('mouseup', function (event) {
+			board.stopDrawing(getSourceCell(event), isDrawing);
+		});
+
+		ui.board.bind('mouseout', function(event) {
+			board.stopDrawing(getSourceCell(event), isDrawing);
+		});
+
+		ui.board.bind('mousemove', function (event) {
+			board.drawAdjacentCells(getSourceCell(event), isDrawing);
+		});
 	}
 
 	function zoomIn(event) {
-		var cell = getClickSourceCell(event);
+		var cell = getSourceCell(event);
 		board.zoom(1, cell);
 
-		if (isPlaying) {
+		if (isEvolving) {
 			startWorker();
 		}
 	}
 
 	function zoomOut(event) {
-		var cell = getClickSourceCell(event);
+		var cell = getSourceCell(event);
 		board.zoom(-1, cell);
 
-		if (isPlaying) {			
+		if (isEvolving) {			
 			startWorker();
 		}
+	}
+	
+	function getSourceCell(event) {
+		return new Cell(
+			Math.floor((event.pageX - event.target.offsetLeft) / board.settings.squareSize),
+			Math.floor((event.pageY - event.target.offsetTop) / board.settings.squareSize));
 	}
 
 	function adjustElementsToAvailableSpace() {
@@ -201,8 +220,8 @@
 	function initializeControlStates() {
 		if (window.Worker) {
 			activateHorizontalLayout();
-			activateGameStoppedState();
 			activateDraw();
+			activateEvolutionStoppedState();
 			ui.error.hide();
 		} else {
 			ui.error.text(messages.noSupport);
@@ -214,46 +233,87 @@
 	}
 
 	function activateDraw() {
+		ui.board.unbind();
+		bindDrawingHandler(true);
+
+		if (crtControlStateFunction == activateDraw)
+			return;
+		
+		crtControlStateFunction = activateDraw;
 		ui.draw.addClass('active');
+		ui.erase.removeClass('active');
 		ui.zoomIn.removeClass('active');
 		ui.zoomOut.removeClass('active');
 		replaceClass(ui.board, 'zooming', 'drawing');
-		bindBoardClickEvent(togglePopulationMember);
+	}
+
+	function activateErase() {
+		ui.board.unbind();
+		bindDrawingHandler(false);
+		
+		if (crtControlStateFunction == activateErase)
+			return;
+
+		crtControlStateFunction = activateErase;
+		ui.draw.removeClass('active');
+		ui.erase.addClass('active');
+		ui.zoomIn.removeClass('active');
+		ui.zoomOut.removeClass('active');
+		replaceClass(ui.board, 'zooming', 'drawing');
 	}
 
 	function activateZoomIn() {
+		ui.board.unbind();
+		bindBoardClickEvent(zoomIn);
+		
+		if (crtControlStateFunction == activateZoomIn)
+			return;
+
+		crtControlStateFunction = activateZoomIn;
 		ui.zoomIn.addClass('active');
 		ui.draw.removeClass('active');
+		ui.erase.removeClass('active');
 		ui.zoomOut.removeClass('active');
 		replaceClass(ui.board, 'drawing', 'zooming');
-		bindBoardClickEvent(zoomIn);
 	}
 
 	function activateZoomOut() {
+		ui.board.unbind();
+		bindBoardClickEvent(zoomOut);
+		
+		if (crtControlStateFunction == activateZoomOut)
+			return;
+
+		crtControlStateFunction = activateZoomOut;
 		ui.zoomOut.addClass('active');
 		ui.draw.removeClass('active');
+		ui.erase.removeClass('active');
 		ui.zoomIn.removeClass('active');
 		replaceClass(ui.board, 'drawing', 'zooming');
-		bindBoardClickEvent(zoomOut);
 	}
 
-	function activateGamePlayingState() {
-		isPlaying = true;
+	function activateEvolutionState() {
+		if (crtControlStateFunction != activateZoomIn && crtControlStateFunction != activateZoomOut) {
+			ui.board.unbind();
+		}
+		
+		isEvolving = true;
 		ui.clear.attr('disabled', 'disabled');
 		ui.draw.attr('disabled', 'disabled');
+		ui.erase.attr('disabled', 'disabled');
 		ui.startOrStop.attr('title', messages.pause);
-		ui.board.unbind();
 		replaceClass(ui.startOrStop, 'start', 'stop');
 	}
 
-	function activateGameStoppedState() {
-		isPlaying = false;
+	function activateEvolutionStoppedState() {
+		isEvolving = false;
 		ui.clear.attr('title', messages.clear);
 		ui.clear.removeAttr('disabled');
 		ui.draw.removeAttr('disabled');
+		ui.erase.removeAttr('disabled');
 		ui.startOrStop.attr('title', messages.start);
 		replaceClass(ui.startOrStop, 'stop', 'start');
-		bindBoardClickEvent(ui.crtBoardEventHandler);
+		crtControlStateFunction();
 	}
 
 	function activateHorizontalLayout() {

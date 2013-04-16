@@ -1,8 +1,8 @@
 ﻿body {
 	background-color: #DEFA7C;
-    color: hsla(0,0%,0%,0.3);
-    margin: 0;
-    padding: 0;
+	color: hsla(0,0%,0%,0.3);
+	margin: 0;
+	padding: 0;
 	font-family: Arial;
 	font-size: 1.4em;
 	color: hsla(0,0%,0%,0.5);
@@ -15,29 +15,29 @@ canvas
 	margin: 6px;
 }
 
-    canvas.zooming {
-        cursor: url(../Images/magnifier_32.png) 0 0, default;
-    }
+	canvas.zooming {
+		cursor: url(../Images/magnifier_32.png) 0 0, row-resize;
+	}
 
-    canvas.drawing {
-        cursor: url(../Images/pencil_32.png) 0 30, pointer;
-    }
+	canvas.drawing {
+		cursor: url(../Images/pencil_32.png) 0 30, pointer;
+	}
 
 button {
 	width: 48px;
 	height: 48px;
 	border: 2px hidden;
 	margin: 16px;
-    cursor: pointer;
+	cursor: pointer;
 }
 
-    button[disabled] {
-        opacity: 0.2;
-    }
+	button[disabled] {
+		opacity: 0.2;
+	}
 
-    button.active {
-        border: 2px dashed hsla(0, 0%, 0%, 0.5);
-    }
+	button.active {
+		border: 2px dashed hsla(0, 0%, 0%, 0.5);
+	}
 
 #content {
 	display: -moz-box;
@@ -56,19 +56,19 @@ button {
 
 /*ToDo:define the right color for each vendor type*/
 .horizontalToolbar {
-    background-image: -o-linear-gradient(top, #9CB72E, #DEFA7C);
-    background-image: -moz-linear-gradient(top, #9CB72E, #DEFA7C);
-    background-image: -webkit-linear-gradient(top, #9CB72E, #DEFA7C);
+	background-image: -o-linear-gradient(top, #9CB72E, #DEFA7C);
+	background-image: -moz-linear-gradient(top, #9CB72E, #DEFA7C);
+	background-image: -webkit-linear-gradient(top, #9CB72E, #DEFA7C);
 	background-image: -ms-linear-gradient(top, #9CB72E, #DEFA7C);
-    background-image: linear-gradient(top, #5CA82A, #DEFA7C);
+	background-image: linear-gradient(top, #5CA82A, #DEFA7C);
 }
 
 /*ToDo:define the right color for each vendor type*/
 .verticalToolbar {
-    background-image: -o-linear-gradient(left, #9CB72E, #DEFA7C);
-    background-image: -moz-linear-gradient(left, #9CB72E, #DEFA7C);
-    background-image: -webkit-linear-gradient(left, #9CB72E, #DEFA7C);
-    background-image: -ms-linear-gradient(left, #9CB72E, #DEFA7C);
+	background-image: -o-linear-gradient(left, #9CB72E, #DEFA7C);
+	background-image: -moz-linear-gradient(left, #9CB72E, #DEFA7C);
+	background-image: -webkit-linear-gradient(left, #9CB72E, #DEFA7C);
+	background-image: -ms-linear-gradient(left, #9CB72E, #DEFA7C);
 	background-image: linear-gradient(left, #9CB72E, #DEFA7C);
 }
 
@@ -81,7 +81,7 @@ button {
 }
 
 .horizontalBox {
-    -moz-box-orient: horizontal;
+	-moz-box-orient: horizontal;
 	-ms-box-orient: horizontal;
 	-webkit-box-orient: horizontal;
 	-o-box-orient: horizontal;
@@ -89,7 +89,7 @@ button {
 }
 
 .verticalBox {
-    -moz-box-orient: vertical;
+	-moz-box-orient: vertical;
 	-ms-box-orient: vertical;
 	-webkit-box-orient: vertical;
 	-o-box-orient: vertical;
@@ -97,16 +97,16 @@ button {
 }
 
 .toVertical {
-    background: url(../Images/minus.png);
-    -ms-transform: rotate(90deg); 
-    -moz-transform: rotate(90deg); 
-    -webkit-transform: rotate(90deg); 
-    -o-transform: rotate(90deg); 
+	background: url(../Images/minus.png);
+	-ms-transform: rotate(90deg); 
+	-moz-transform: rotate(90deg); 
+	-webkit-transform: rotate(90deg); 
+	-o-transform: rotate(90deg); 
 	transform: rotate(90deg);
 }
 
 .toHorizontal {
-    background: url(../Images/minus.png);
+	background: url(../Images/minus.png);
 }
 
 .start {
@@ -126,15 +126,19 @@ button {
 }
 
 .draw {
-    background: url(../Images/pencil.png);
+	background: url(../Images/pencil.png);
+}
+
+.erase {
+	background: url(../Images/pencil.png), url(../Images/x_32.png) no-repeat center center;
 }
 
 .zoomIn {
-    background: url(../Images/magnifier.png), url(../Images/plus_16.png) no-repeat left bottom;
+	background: url(../Images/magnifier.png), url(../Images/plus_16.png) no-repeat left bottom;
 }
 
 .zoomOut {
-    background: url(../Images/magnifier.png), url(../Images/minus_16.png) no-repeat left bottom;
+	background: url(../Images/magnifier.png), url(../Images/minus_16.png) no-repeat left bottom;
 }
 
 #error {
@@ -142,9 +146,9 @@ button {
 	color: #DEFA70;
 	position: absolute;
 	top: 45%;
-    left: 12em;
-    right: 12em;
-    padding: 1.2em 64px 1.2em;
+	left: 12em;
+	right: 12em;
+	padding: 1.2em 64px 1.2em;
 	-ms-border-radius: 16px;
 	-moz-border-radius: 16px;
 	-o-border-radius: 16px;
