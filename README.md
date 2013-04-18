@@ -10,8 +10,6 @@ As the description says, the game space is infinite. There is an initial board w
 
 You may draw anything on board by choosing the pencil from the menu and dragging lines with the mouse onto the board. Erasing works in the same way as drawing, but for this you need to choose the pencil which is crossed. After you are happy with the seed (i.e., the state on the board), the evolution can be started. At any moment, it can be stopped. While the automata is evolving, it is not possible to toggle the states of the grid cells.
 
-This application only runs in browsers with canvas, local storage and web workers support (minimum version: IE 10, Firefox 3.5, Chrome 3, Safari 4, Opera 10.6).	
-
 Some further next steps
 -----------------------
 
@@ -33,4 +31,9 @@ Some further next steps
 
 - Game statistics
 
-	
+Browser Support
+-----------------------	
+
+This application only runs in browsers with canvas, local storage and web workers support (minimum version: IE 10, Firefox 3.5, Chrome 3, Safari 4, Opera 10.6).	
+
+If you are using Chrome, you need to run the application from a web server so that the cells on the board can evolve.
