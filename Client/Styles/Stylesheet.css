@@ -1,6 +1,5 @@
 ﻿body {
 	background-color: #DEFA7C;
-	color: hsla(0,0%,0%,0.3);
 	margin: 0;
 	padding: 0;
 	font-family: Arial;
@@ -41,14 +40,14 @@ button {
 
 #content {
 	display: -moz-box;
-	display: -ms-box;
+	display: -ms-flexbox;
 	display: -webkit-box;
 	display: -o-box;
 }
 
 #content-toolbar {
 	-moz-box-flex: 1;
-	-ms-box-flex: 1;
+	-ms-flexbox: 1;
 	-webkit-box-flex: 1;
 	-o-box-flex: 1;
 	box-flex: 1;
@@ -74,7 +73,7 @@ button {
 
 #content-game {
 	-moz-box-flex: 40;
-	-ms-box-flex: 40;
+	-ms-flexbox: 40;
 	-webkit-box-flex: 40;
 	-o-box-flex: 40;
 	box-flex: 40;
@@ -82,7 +81,7 @@ button {
 
 .horizontalBox {
 	-moz-box-orient: horizontal;
-	-ms-box-orient: horizontal;
+	-ms-flex-direction: row;
 	-webkit-box-orient: horizontal;
 	-o-box-orient: horizontal;
 	box-orient: horizontal;
@@ -90,7 +89,7 @@ button {
 
 .verticalBox {
 	-moz-box-orient: vertical;
-	-ms-box-orient: vertical;
+	-ms-flex-direction: column;
 	-webkit-box-orient: vertical;
 	-o-box-orient: vertical;
 	box-orient: vertical;

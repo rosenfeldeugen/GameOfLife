@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{5C02603E-EFC3-44E3-919E-8E26D5534B74}"
+	ProjectSection(SolutionItems) = preProject
+		Client\code review.txt = Client\code review.txt
+		Client\Play.html = Client\Play.html
+		Client\README.md = Client\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{E391832E-BFC2-47E7-B107-EB4F3CCDDBEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{73A5F42C-49B8-4755-968C-249153956A46}"
+	ProjectSection(SolutionItems) = preProject
+		Client\Images\danger_sign.png = Client\Images\danger_sign.png
+		Client\Images\info.png = Client\Images\info.png
+		Client\Images\magnifier.png = Client\Images\magnifier.png
+		Client\Images\magnifier_32.png = Client\Images\magnifier_32.png
+		Client\Images\minus.png = Client\Images\minus.png
+		Client\Images\minus_16.png = Client\Images\minus_16.png
+		Client\Images\page.png = Client\Images\page.png
+		Client\Images\pause.png = Client\Images\pause.png
+		Client\Images\pencil.png = Client\Images\pencil.png
+		Client\Images\pencil_32.png = Client\Images\pencil_32.png
+		Client\Images\play.png = Client\Images\play.png
+		Client\Images\plus_16.png = Client\Images\plus_16.png
+		Client\Images\x.png = Client\Images\x.png
+		Client\Images\x_32.png = Client\Images\x_32.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{D40FEDF3-9828-41E0-B447-3BE1FF22F3F6}"
+	ProjectSection(SolutionItems) = preProject
+		Client\Scripts\Board.js = Client\Scripts\Board.js
+		Client\Scripts\CellularAutomata.js = Client\Scripts\CellularAutomata.js
+		Client\Scripts\Game.js = Client\Scripts\Game.js
+		Client\Scripts\GameWorker.js = Client\Scripts\GameWorker.js
+		Client\Scripts\WebSocket.js = Client\Scripts\WebSocket.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Styles", "Styles", "{3E4E4E0B-653A-4AA9-A533-047CB1EF8F4E}"
+	ProjectSection(SolutionItems) = preProject
+		Client\Styles\Stylesheet.css = Client\Styles\Stylesheet.css
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E391832E-BFC2-47E7-B107-EB4F3CCDDBEA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E391832E-BFC2-47E7-B107-EB4F3CCDDBEA}.Debug|x86.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{73A5F42C-49B8-4755-968C-249153956A46} = {5C02603E-EFC3-44E3-919E-8E26D5534B74}
+		{D40FEDF3-9828-41E0-B447-3BE1FF22F3F6} = {5C02603E-EFC3-44E3-919E-8E26D5534B74}
+		{3E4E4E0B-653A-4AA9-A533-047CB1EF8F4E} = {5C02603E-EFC3-44E3-919E-8E26D5534B74}
+	EndGlobalSection
+EndGlobal

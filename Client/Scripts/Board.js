@@ -37,6 +37,9 @@ Board.prototype.drawCell = function (cell, isAlive) {
 	} else {
 		this.remove(cell);
 	}
+
+	if (socket && socket.readyState == 1)
+		socket.send(getJsonMessage('draw', 'draw'));
 };
 
 Board.prototype.reset = function() {

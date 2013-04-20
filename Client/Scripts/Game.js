@@ -1,4 +1,4 @@
-﻿(function () {
+﻿(function ($) {
 
 	var board;
 	var worker;
@@ -12,7 +12,7 @@
 		toHorizontal: 'Switch layout to horizontal',
 		toVertical: 'Switch layout to vertical',
 		clear: 'Clear state',
-		noSupport: 'Unfortunately, this browser cannot run this version of Game of Life. Try to upgrade or access the game from another browser.'
+		noSupport: 'Unfortunately, this brosocketer cannot run this version of Game of Life. Try to upgrade or access the game from another brosocketer.'
 	};
 
 	/* document ready */
@@ -79,6 +79,8 @@
 		ui.zoomOut.bind('click', function () {
 			activateZoomOut();
 		});
+
+		openWebSocket();
 
 		/* END event binding */
 	});  /* END document ready*/
@@ -330,4 +332,4 @@
 		ui.verticalOrHorizontalBox.attr('title', messages.toHorizontal);
 	}
 
-})(); //END namespace
+})(jQuery); //END namespace
