@@ -12,7 +12,7 @@
 		toHorizontal: 'Switch layout to horizontal',
 		toVertical: 'Switch layout to vertical',
 		clear: 'Clear state',
-		noSupport: 'Unfortunately, this brosocketer cannot run this version of Game of Life. Try to upgrade or access the game from another brosocketer.'
+		noSupport: 'Unfortunately, your browser cannot run this version of Game of Life. Try to upgrade or access the game from another browser.'
 	};
 
 	/* document ready */
