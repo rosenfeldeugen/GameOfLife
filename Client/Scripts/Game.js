@@ -2,8 +2,9 @@
 var socket;
 
 (function ($) {
-	var worker;
+	
 	var ui;
+	var socket;
 	var crtControlStateFunction;
 	var isEvolving = false;
 	var messages = {
@@ -95,21 +96,6 @@ var socket;
 		/* END event binding */
 	});  /* END document ready*/
 
-	function sendMessageToWorker() {
-		worker.postMessage({
-			currentState: board.state
-		});
-	}
-
-	function startWorker() {
-		if (worker) {
-			worker.terminate();
-		}
-		worker = new Worker('Scripts/GameWorker.js');
-		worker.onmessage = nextStateReceived;
-		sendMessageToWorker();
-	}
-
 	function start() {
 		if (board.state.length == 0)
 			return;
@@ -122,18 +108,6 @@ var socket;
 		activateEvolutionStoppedState();
 		worker.terminate();
 		board.save();
-	}
-
-	function nextStateReceived(event) {
-		board.state = event.data.nextState;
-		board.removed = event.data.elementsRemoved;
-
-		if (board.state.length == 0) { 
-			stop();
-		}
-
-		board.draw(false);
-		sendMessageToWorker();
 	}
 
 	function toggleBoxOrientation() {
