@@ -187,19 +187,19 @@ var socket;
 	function bindDrawingHandler(isDrawing) {
 
 		ui.board.bind('mousedown', function (event) {
-			board.startDrawing(getSourceCell(event), isDrawing);
+			board.startDrawing(getSourceCell(event, isDrawing));
 		});
 
 		ui.board.bind('mouseup', function (event) {
-			board.stopDrawing(getSourceCell(event), isDrawing);
+			board.stopDrawing(getSourceCell(event, isDrawing));
 		});
 
 		ui.board.bind('mouseout', function(event) {
-			board.stopDrawing(getSourceCell(event), isDrawing);
+			board.stopDrawing(getSourceCell(event, isDrawing));
 		});
 
 		ui.board.bind('mousemove', function (event) {
-			board.drawingCells(getSourceCell(event), isDrawing);
+			board.drawingCells(getSourceCell(event, isDrawing));
 		});
 	}
 
@@ -221,10 +221,11 @@ var socket;
 		}
 	}
 	
-	function getSourceCell(event) {
+	function getSourceCell(event, isAlive) {
 		return new Cell(
 			Math.floor((event.pageX - event.target.offsetLeft) / board.settings.squareSize),
-			Math.floor((event.pageY - event.target.offsetTop) / board.settings.squareSize));
+			Math.floor((event.pageY - event.target.offsetTop) / board.settings.squareSize),
+			isAlive);
 	}
 
 	function adjustElementsToAvailableSpace() {

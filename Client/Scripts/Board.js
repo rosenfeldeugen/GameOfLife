@@ -31,8 +31,8 @@ Board.prototype.draw = function (redrawGrid) {
 	this.removedDeadCells();
 };
 
-Board.prototype.drawCell = function (cell, isAlive) {
-	if (isAlive) {
+Board.prototype.drawCell = function (cell) {
+	if (cell.isAlive) {
 		this.add(cell);
 	} else {
 		this.remove(cell);
@@ -145,23 +145,23 @@ Board.prototype.translateElements = function (cell) {
 	});
 };
 
-Board.prototype.startDrawing = function (cell, isAlive) {
+Board.prototype.startDrawing = function (cell) {
 	this.isDrawing = true;
-	this.drawCell(cell, isAlive);
-	broadcastCellInfo(cell, isAlive);
+	this.drawCell(cell);
+	broadcast(cell);
 };
 
-Board.prototype.drawingCells = function (cell, isAlive) {
+Board.prototype.drawingCells = function (cell) {
 	if (this.isDrawing) {
-		this.drawCell(cell, isAlive);
-		broadcastCellInfo(cell, isAlive);
+		this.drawCell(cell);
+		broadcast(cell);
 	}
 };
 
-Board.prototype.stopDrawing = function (cell, isAlive) {
+Board.prototype.stopDrawing = function (cell) {
 	if (this.isDrawing) {
-		this.drawCell(cell, isAlive);
-		broadcastCellInfo(cell, isAlive);
+		this.drawCell(cell);
+		broadcast(cell);
 	}
 	this.save();
 	this.isDrawing = false;

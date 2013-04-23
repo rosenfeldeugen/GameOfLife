@@ -22,8 +22,8 @@ function connectionOpened() {
 
 function messageReceived(event) {
 	var response = JSON.parse(event.data);
-	console.log(response.x + " " + response.y + " " + response.isAlive);
-	board.drawCell(new Cell(response.x, response.y), response.isAlive);
+	var cell = new Cell(response.x, response.y, response.isAlive);
+	board.drawCell(cell);
 }
 
 function errorOccured() {
@@ -34,10 +34,10 @@ function connectionClosed() {
 	alert('Connection to ws://localhost:4521/ has been closed');
 }
 
-function broadcastCellInfo(cell, isAlive) {
+function broadcast(cell) {
 	if (!socket || socket.readyState != 1)
 		return;
 	
-	var message = JSON.stringify({ x: cell.x, y: cell.y, isAlive: isAlive });
+	var message = JSON.stringify(cell);
 	socket.send(message);
 }

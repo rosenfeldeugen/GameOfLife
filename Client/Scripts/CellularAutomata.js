@@ -57,9 +57,10 @@ CellularAutomata.prototype.tick = function () {
 /*
 * Cell
 */
-var Cell = function (x, y) {
+var Cell = function (x, y, isAlive) {
 	this.x = x;
 	this.y = y;
+	this.isAlive = isAlive;
 };
 
 Cell.prototype.equals = function (otherCell) {
