@@ -36,6 +36,7 @@ CellularAutomata.prototype.tick = function () {
 	var maxY = this.getSearchSpaceEndIndex('y');
 		
 	var nextState = [];
+	this.elementsRemoved = [];
 	
 	for (var i = minX; i <= maxX; i++) {
 		for (var j = minY; j <= maxY; j++) {
@@ -44,6 +45,8 @@ CellularAutomata.prototype.tick = function () {
 
 			if (neighbors == 3 || neighbors == 2 && this.isAlive(cell)) {
 				nextState.push(cell);
+			} else if (this.isAlive(cell)) {
+				this.elementsRemoved.push(cell);
 			}
 		}
 	}

@@ -9,5 +9,5 @@ onmessage = function (event) {
 
 function tick() {
 	automata.tick();
-	postMessage({ nextState: automata.state });
+	postMessage({ nextState: automata.state, elementsRemoved: automata.elementsRemoved });
 }

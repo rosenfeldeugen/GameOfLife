@@ -116,12 +116,13 @@
 
 	function nextStateReceived(event) {
 		board.state = event.data.nextState;
+		board.removed = event.data.elementsRemoved;
 
 		if (board.state.length == 0) { 
 			stop();
 		}
 
-		board.draw();
+		board.draw(false);
 		sendMessageToWorker();
 	}
 

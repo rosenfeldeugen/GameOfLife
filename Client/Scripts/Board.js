@@ -16,19 +16,19 @@ Board.prototype.adjustSize = function(width, height) {
 	this.height = height;
 	this.canvas.width = this.width * this.settings.squareSize;
 	this.canvas.height = this.height * this.settings.squareSize;
-	this.draw();
+	this.draw(true);
 };
 
 Board.prototype.load = function () {
 	this.state = localStorage.lastBoard ? JSON.parse(localStorage.lastBoard) : [];
+	this.removed = [];
 };
 
-Board.prototype.draw = function () {
-	this.drawGridLines();
-
-	if (this.state && this.state.length > 0) {
-		this.populateGrid();
-	}
+Board.prototype.draw = function (redrawGrid) {
+	if (redrawGrid)
+		this.drawGridLines();
+	this.populateGrid();
+	this.removedDeadCells();
 };
 
 Board.prototype.drawCell = function (cell, isAlive) {
@@ -44,12 +44,12 @@ Board.prototype.drawCell = function (cell, isAlive) {
 
 Board.prototype.reset = function() {
 	this.clear();
-	this.draw();
+	this.draw(true);
 };
 
 Board.prototype.restore = function() {
 	this.load();
-	this.draw();
+	this.draw(true);
 };
 
 Board.prototype.clear = function() {
@@ -70,25 +70,36 @@ Board.prototype.drawGridLines = function() {
 
 Board.prototype.populateGrid = function() {
 	for (var i = 0; i < this.state.length; i++) {
-		if (this.state[i].x < this.width || this.state[i].y < this.height) {
+		if (this.state[i].x < this.width || this.state[i].y < this.height) { 
 			this.drawAliveCell(this.state[i]);
+		} 
+	}
+};
+
+Board.prototype.removedDeadCells = function () {
+	for (var i = 0; i < this.removed.length; i++) {
+		if (this.removed[i].x < this.width || this.removed[i].y < this.height) {
+			this.drawDeadCell(this.removed[i]);
 		}
 	}
 };
 
 Board.prototype.drawAliveCell = function (cell) {
+	var squareSize = this.settings.squareSize;
 	this.drawingContext.fillStyle = this.settings.fillColor;
 	this.drawingContext.strokeStyle = this.settings.gridColor;
 
-	this.drawingContext.fillRect(cell.x * this.settings.squareSize, cell.y * this.settings.squareSize, this.settings.squareSize, this.settings.squareSize);
+	this.drawingContext.clearRect(cell.x * squareSize, cell.y * squareSize, squareSize, squareSize);
+	this.drawingContext.fillRect(cell.x * squareSize, cell.y * squareSize, squareSize, squareSize);
 	this.drawingContext.stroke();
 };
 
 Board.prototype.drawDeadCell = function (cell) {
+	var squareSize = this.settings.squareSize;
 	this.drawingContext.strokeStyle = this.settings.gridColor;
 
-	this.drawingContext.clearRect(cell.x * this.settings.squareSize, cell.y * this.settings.squareSize, this.settings.squareSize, this.settings.squareSize);
-	this.drawingContext.strokeRect(cell.x * this.settings.squareSize, cell.y * this.settings.squareSize, this.settings.squareSize, this.settings.squareSize);
+	this.drawingContext.clearRect(cell.x * squareSize, cell.y * squareSize, squareSize, squareSize);
+	this.drawingContext.strokeRect(cell.x * squareSize, cell.y * squareSize, squareSize, squareSize);
 	this.drawingContext.stroke();
 };
 
@@ -116,7 +127,7 @@ Board.prototype.zoom = function (type, cell) {
 	this.width = this.canvas.width / this.settings.squareSize;
 	this.height = this.canvas.height / this.settings.squareSize;
 	this.translateElements(cell);
-	this.draw();
+	this.draw(true);
 };
 
 Board.prototype.isZoomable = function (type) {

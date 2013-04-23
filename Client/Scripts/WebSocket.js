@@ -19,7 +19,6 @@ function openWebSocket() {
 	} catch (exception) {
 		console.log('exception encountered:  ' + exception);
 	}
-	
 }
 
 function connectionOpened() {
