@@ -33,7 +33,8 @@ var socket;
 			draw: $('#draw'),
 			erase: $('#erase'),
 			zoomIn: $('#zoomIn'),
-			zoomOut: $('#zoomOut')
+			zoomOut: $('#zoomOut'),
+			multiUser: $('#multiUser')
 		};
 
 		board = new Board(ui.board[0],
@@ -88,8 +89,9 @@ var socket;
 			activateZoomOut();
 		});
 
-		openWebSocket();
-
+		ui.multiUser.bind('click', function () {
+			toggleMultiUserState();
+		});
 		/* END event binding */
 	});  /* END document ready*/
 
@@ -154,6 +156,24 @@ var socket;
 		} else if (ui.startOrStop.hasClass('stop')) {
 			stop();
 		}
+	}
+
+	function toggleMultiUserState() {
+		if (ui.multiUser.hasClass('active')) {
+			turnOffMultiUserMode();
+		} else {
+			turnOnMultiUserMode();
+		}
+	}
+	
+	function turnOnMultiUserMode() {
+		ui.multiUser.addClass('active');
+		openWebSocket();
+	}
+
+	function turnOffMultiUserMode() {
+		ui.multiUser.removeClass('active');
+		closeWebSocket();
 	}
 
 	function bindBoardClickEvent(handler) {

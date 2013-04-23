@@ -19,6 +19,10 @@ function openWebSocket() {
 	}
 }
 
+function closeWebSocket() {
+	socket.close();
+}
+
 function connectionOpened() {
 	alert('connected to ws://localhost:4521/');
 }
@@ -34,7 +38,7 @@ function errorOccured() {
 }
 
 function connectionClosed() {
-	console.log('connection closed');
+	alert('connection to ws://localhost:4521/ has been closed');
 }
 
 function sendCellInfo(cell, isAlive) {

@@ -116,28 +116,32 @@ button {
 	background: url(../Images/pause.png);
 }
 
-.clear {
+#clear {
 	background: url(../Images/page.png);
 }
 
-.info {
+#info {
 	background: url(../Images/info.png);
 }
 
-.draw {
+#draw {
 	background: url(../Images/pencil.png);
 }
 
-.erase {
+#erase {
 	background: url(../Images/pencil.png), url(../Images/x_32.png) no-repeat center center;
 }
 
-.zoomIn {
+#zoomIn {
 	background: url(../Images/magnifier.png), url(../Images/plus_16.png) no-repeat left bottom;
 }
 
-.zoomOut {
+#zoomOut {
 	background: url(../Images/magnifier.png), url(../Images/minus_16.png) no-repeat left bottom;
+}
+
+#multiUser {
+	background: url(../Images/user_32.png) no-repeat top left, url(../Images/user_32.png) no-repeat bottom right;
 }
 
 #error {

@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{73A5F4
 		Client\Images\pencil_32.png = Client\Images\pencil_32.png
 		Client\Images\play.png = Client\Images\play.png
 		Client\Images\plus_16.png = Client\Images\plus_16.png
-		Client\Images\x.png = Client\Images\x.png
+		Client\Images\user_32.png = Client\Images\user_32.png
 		Client\Images\x_32.png = Client\Images\x_32.png
 	EndProjectSection
 EndProject

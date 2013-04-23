@@ -10,26 +10,26 @@ As the description says, the game space is infinite. There is an initial board w
 
 You may draw anything on board by choosing the pencil from the menu and dragging lines with the mouse onto the board. Erasing works in the same way as drawing, but for this you need to choose the pencil which is crossed. After you are happy with the seed (i.e., the state on the board), the evolution can be started. At any moment, it can be stopped. While the automata is evolving, it is not possible to toggle the states of the grid cells.
 
+In order to see how the game in multi-player mode works, you need to run the Server project, which is a console application. Once started, all the clients will be connected to the same server and will see what the all the others draw.
+
 Some further next steps
 -----------------------
 
-- Performance tuning
+- Making the multiplayer mode fully functional
 
-- Multiplayer mode using web sockets
-
-- Mark outside elements (which are not visible in the current state of the board)
-
-- Step by step running
-
-- Save/load pattern
-
-- Help
-
-- Offline operation mode
+- Warning about elements which are outside of the viewport
 
 - Different coloring of conencted elements
 
+- Step by step running
+
 - Game statistics
+
+- Save/load patterns
+
+- Offline operation mode
+
+- Performance tuning & code maintenane (getting rid of smells)
 
 Browser Support
 -----------------------	
