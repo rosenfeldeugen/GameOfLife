@@ -148,20 +148,20 @@ Board.prototype.translateElements = function (cell) {
 Board.prototype.startDrawing = function (cell, isAlive) {
 	this.isDrawing = true;
 	this.drawCell(cell, isAlive);
-	sendCellInfo(cell, isAlive);
+	broadcastCellInfo(cell, isAlive);
 };
 
 Board.prototype.drawingCells = function (cell, isAlive) {
 	if (this.isDrawing) {
 		this.drawCell(cell, isAlive);
-		sendCellInfo(cell, isAlive);
+		broadcastCellInfo(cell, isAlive);
 	}
 };
 
 Board.prototype.stopDrawing = function (cell, isAlive) {
 	if (this.isDrawing) {
 		this.drawCell(cell, isAlive);
-		sendCellInfo(cell, isAlive);
+		broadcastCellInfo(cell, isAlive);
 	}
 	this.save();
 	this.isDrawing = false;

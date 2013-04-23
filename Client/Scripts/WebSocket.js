@@ -1,30 +1,23 @@
-function openWebSocket() {
+function openWebSocket(url) {
 	if (!'WebSocket' in window) {
-		console.log('this brosocketer does not support web sockets');
+		alert('No support for web sockets.');
 		return;
 	}
 
 	try {
-		socket = new WebSocket('ws://localhost:4521/');
-
+		socket = new WebSocket(url);
 		socket.onopen = connectionOpened;
 		socket.onmessage = messageReceived;
 		socket.onerror = errorOccured;
 		socket.onclose = connectionClosed;
-
-		console.log('ready state ' + socket.readyState);
-		
+		return socket;
 	} catch (exception) {
-		console.log('exception encountered:  ' + exception);
+		alert('Unexpected error occured. WebSocket could not be opened.');
 	}
 }
 
-function closeWebSocket() {
-	socket.close();
-}
-
 function connectionOpened() {
-	alert('connected to ws://localhost:4521/');
+	alert('Connected to ws://localhost:4521/');
 }
 
 function messageReceived(event) {
@@ -34,14 +27,14 @@ function messageReceived(event) {
 }
 
 function errorOccured() {
-	alert('websocket error occurred');
+	alert('WebSocket error occurred.');
 }
 
 function connectionClosed() {
-	alert('connection to ws://localhost:4521/ has been closed');
+	alert('Connection to ws://localhost:4521/ has been closed');
 }
 
-function sendCellInfo(cell, isAlive) {
+function broadcastCellInfo(cell, isAlive) {
 	if (!socket || socket.readyState != 1)
 		return;
 	

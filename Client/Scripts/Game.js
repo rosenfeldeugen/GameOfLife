@@ -168,12 +168,12 @@ var socket;
 	
 	function turnOnMultiUserMode() {
 		ui.multiUser.addClass('active');
-		openWebSocket();
+		socket = openWebSocket('ws://localhost:4521/');
 	}
 
 	function turnOffMultiUserMode() {
 		ui.multiUser.removeClass('active');
-		closeWebSocket();
+		socket.close();
 	}
 
 	function bindBoardClickEvent(handler) {
