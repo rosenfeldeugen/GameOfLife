@@ -85,22 +85,23 @@ Board.prototype.removedDeadCells = function () {
 };
 
 Board.prototype.drawAliveCell = function (cell) {
+	this.drawDeadCell(cell);
+	
 	var squareSize = this.settings.squareSize;
 	this.drawingContext.fillStyle = this.settings.fillColor;
-	this.drawingContext.strokeStyle = this.settings.gridColor;
-
-	this.drawingContext.clearRect(cell.x * squareSize, cell.y * squareSize, squareSize, squareSize);
 	this.drawingContext.fillRect(cell.x * squareSize, cell.y * squareSize, squareSize, squareSize);
-	this.drawingContext.stroke();
 };
 
 Board.prototype.drawDeadCell = function (cell) {
 	var squareSize = this.settings.squareSize;
-	this.drawingContext.strokeStyle = this.settings.gridColor;
 
 	this.drawingContext.clearRect(cell.x * squareSize, cell.y * squareSize, squareSize, squareSize);
+	
+	this.drawingContext.strokeStyle = this.settings.backgroundColor;
 	this.drawingContext.strokeRect(cell.x * squareSize, cell.y * squareSize, squareSize, squareSize);
-	this.drawingContext.stroke();
+	
+	this.drawingContext.strokeStyle = this.settings.gridColor;
+	this.drawingContext.strokeRect(cell.x * squareSize, cell.y * squareSize, squareSize, squareSize);
 };
 
 Board.prototype.add = function (cell) {

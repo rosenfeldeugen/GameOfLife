@@ -35,7 +35,14 @@
 			zoomOut: $('#zoomOut')
 		};
 
-		board = new Board(ui.board[0], { squareSize: 18, zoomFactor: 3, gridColor: 'hsla(0, 0%, 0%, 0.2)', fillColor: 'hsla(0, 0%, 0%, 0.4)'});
+		board = new Board(ui.board[0],
+			{
+				squareSize: 18, 
+				zoomFactor: 3, 
+				gridColor: 'hsla(0, 0%, 0%, 0.3)', 
+				fillColor: 'hsla(0, 0%, 0%, 0.4)', 
+				backgroundColor: '#DEFA7C'
+			});
 
 		initializeControlStates();
 		adjustElementsToAvailableSpace();
