@@ -1,6 +1,7 @@
-﻿(function ($) {
+﻿var board;
+var socket;
 
-	var board;
+(function ($) {
 	var worker;
 	var ui;
 	var crtControlStateFunction;
@@ -178,7 +179,7 @@
 		});
 
 		ui.board.bind('mousemove', function (event) {
-			board.drawAdjacentCells(getSourceCell(event), isDrawing);
+			board.drawingCells(getSourceCell(event), isDrawing);
 		});
 	}
 

@@ -4,7 +4,7 @@ var automata;
 
 onmessage = function (event) {
 	automata = new CellularAutomata(event.data.currentState);
-	setTimeout(tick, 400);
+	setTimeout(tick, 300);
 };
 
 function tick() {

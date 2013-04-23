@@ -1,5 +1,3 @@
-var socket;
-
 function openWebSocket() {
 	if (!'WebSocket' in window) {
 		console.log('this brosocketer does not support web sockets');
@@ -7,7 +5,7 @@ function openWebSocket() {
 	}
 
 	try {
-		socket = new WebSocket('ws://echo.websocket.org/');
+		socket = new WebSocket('ws://localhost:4521/');
 
 		socket.onopen = connectionOpened;
 		socket.onmessage = messageReceived;
@@ -22,22 +20,27 @@ function openWebSocket() {
 }
 
 function connectionOpened() {
-	console.log('connecion opened');
+	alert('connected to ws://localhost:4521/');
 }
 
 function messageReceived(event) {
-	console.log('message: ' + event.data);
+	var response = JSON.parse(event.data);
+	console.log(response.x + " " + response.y + " " + response.isAlive);
+	board.drawCell(new Cell(response.x, response.y), response.isAlive);
 }
 
 function errorOccured() {
-	console.log('error');
+	alert('websocket error occurred');
 }
 
 function connectionClosed() {
 	console.log('connection closed');
 }
 
-function getJsonMessage(action, message) {
-	var jsonMessage = '{"Action":"' + action + '","Message":"' + message + '"}';
-	return jsonMessage;
+function sendCellInfo(cell, isAlive) {
+	if (!socket || socket.readyState != 1)
+		return;
+	
+	var message = JSON.stringify({ x: cell.x, y: cell.y, isAlive: isAlive });
+	socket.send(message);
 }
