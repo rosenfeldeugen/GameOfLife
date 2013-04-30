@@ -34,12 +34,12 @@
             noSupport: 'Unfortunately, your browser cannot run this version of Game of Life. Try to upgrade or access the game from another browser.'
         },
         onNewState:function(data) {
-            //this.board.state = data.nextState;
-            //this.board.removed = data.elementsRemoved;
-            this.board.draw(false);
+            //this.universe.state = data.nextState;
+            //this.universe.removed = data.elementsRemoved;
+            this.universe.draw(false);
         },
         onSocketData: function (socketData) {
-            this.board.addNewCell(socketData);
+            this.universe.addNewCell(socketData);
         },
         initialize: function() {
             /* page initialization */
@@ -47,7 +47,7 @@
             eventDispatcher.listen("Game", "State:newState", this.onNewState, this);
             eventDispatcher.listen("Game", "Socket:newData", this.onSocketData, this);
             this.socket = new Socket();
-            this.board = new this.Universe(this.ui.board[0],
+            this.universe = new this.Universe(this.ui.board[0],
                 {
                     squareSize: 18,
                     zoomFactor: 3,
@@ -56,7 +56,7 @@
                     backgroundColor: '#DEFA7C'
                 });
             
-            this.stateGeneration = new StateGeneration(this.board);
+            this.stateGeneration = new StateGeneration(this.universe);
             this.initializeControlStates();
             this.adjustElementsToAvailableSpace();
 
@@ -69,7 +69,7 @@
             };
 
             this.ui.clear.bind('click', function() {
-                self.board.reset();
+                self.universe.reset();
             });
 
             this.ui.startOrStop.bind('click', function () {
@@ -112,7 +112,7 @@
         stop: function() {
             this.activateEvolutionStoppedState();
             this.stateGeneration.stopWorker();
-            this.board.save();
+            this.universe.save();
         },
 
         toggleBoxOrientation: function() {
@@ -156,9 +156,9 @@
 
         bindBoardClickEvent: function(handler, source) {
             this.ui.board.unbind();
-            var self = this;
+            
             this.ui.board.bind('click', function (event) {
-                handler.call(source,event);
+                handler.call(source, event);
             });
             this.ui.crtBoardEventHandler = handler;
         },
@@ -167,23 +167,23 @@
             var self = this;
             this.ui.board.bind('mousedown', function (event) {
                 var cell = self.getSourceCell(event, isDrawing);
-                self.board.startDrawing(cell);
+                self.universe.startDrawing(cell);
                 self.broadcast(cell);
             });
 
             this.ui.board.bind('mouseup', function (event) {
-                self.board.stopDrawing(self.getSourceCell(event, isDrawing));
+                self.universe.stopDrawing(self.getSourceCell(event, isDrawing));
             });
 
             this.ui.board.bind('mouseout', function (event) {
                 var cell = self.getSourceCell(event, isDrawing);
-                self.board.stopDrawing(cell);
+                self.universe.stopDrawing(cell);
                 self.broadcast(cell);
             });
 
             this.ui.board.bind('mousemove', function (event) {
                 var cell = self.getSourceCell(event, isDrawing);
-                self.board.drawingCells(cell);
+                self.universe.drawingCells(cell);
                 self.broadcast(cell);
             });
         },
@@ -192,7 +192,7 @@
         },
         zoomIn: function(event) {
             var cell = this.getSourceCell(event);
-            this.board.zoom(1, cell);
+            this.universe.zoom(1, cell);
 
             if (this.isEvolving) {
                 this.startWorker();
@@ -201,7 +201,7 @@
 
         zoomOut: function(event) {
             var cell = this.getSourceCell(event);
-            this.board.zoom(-1, cell);
+            this.universe.zoom(-1, cell);
 
             if (this.isEvolving) {
                 this.startWorker();
@@ -209,7 +209,7 @@
         },
 
         getSourceCell: function(event, isAlive) {
-            return this.board.getSourceCell(event, isAlive);
+            return this.universe.getSourceCell(event, isAlive);
         },
 
         adjustElementsToAvailableSpace: function() {
@@ -222,14 +222,14 @@
                 this.ui.toolbar.width(parseInt(this.ui.clear.css('width')) +
                     parseInt(this.ui.clear.css('margin-right')) + parseInt(this.ui.clear.css('margin-left')));
                 this.ui.toolbar.height(window.innerHeight);
-                this.board.adjustSize(Math.floor((window.innerWidth - this.ui.toolbar.width() - horizontalOuterWidth) / this.board.settings.squareSize),
-                    Math.floor((window.innerHeight - verticalOuterWidth) / this.board.settings.squareSize));
+                this.universe.adjustSize(Math.floor((window.innerWidth - this.ui.toolbar.width() - horizontalOuterWidth) / this.universe.settings.squareSize),
+                    Math.floor((window.innerHeight - verticalOuterWidth) / this.universe.settings.squareSize));
             } else {
                 this.ui.toolbar.width(window.innerWidth);
                 this.ui.toolbar.height(parseInt(this.ui.clear.css('height')) +
                     parseInt(this.ui.clear.css('margin-top')) + parseInt(this.ui.clear.css('margin-bottom')));
-                this.board.adjustSize(Math.floor((window.innerWidth - horizontalOuterWidth) / this.board.settings.squareSize),
-                    Math.floor((window.innerHeight - this.ui.toolbar.height() - verticalOuterWidth) / this.board.settings.squareSize));
+                this.universe.adjustSize(Math.floor((window.innerWidth - horizontalOuterWidth) / this.universe.settings.squareSize),
+                    Math.floor((window.innerHeight - this.ui.toolbar.height() - verticalOuterWidth) / this.universe.settings.squareSize));
             }
         },
 
