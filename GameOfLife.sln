@@ -30,10 +30,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{73A5F4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{D40FEDF3-9828-41E0-B447-3BE1FF22F3F6}"
 	ProjectSection(SolutionItems) = preProject
-		Client\Scripts\Board.js = Client\Scripts\Board.js
+		Client\Scripts\Cell.js = Client\Scripts\Cell.js
 		Client\Scripts\CellularAutomata.js = Client\Scripts\CellularAutomata.js
+		Client\Scripts\EventDispatcher.js = Client\Scripts\EventDispatcher.js
 		Client\Scripts\Game.js = Client\Scripts\Game.js
 		Client\Scripts\GameWorker.js = Client\Scripts\GameWorker.js
+		Client\Scripts\main.js = Client\Scripts\main.js
+		Client\Scripts\require.js = Client\Scripts\require.js
+		Client\Scripts\StateGeneration.js = Client\Scripts\StateGeneration.js
+		Client\Scripts\Universe2D.js = Client\Scripts\Universe2D.js
 		Client\Scripts\WebSocket.js = Client\Scripts\WebSocket.js
 	EndProjectSection
 EndProject

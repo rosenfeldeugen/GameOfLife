@@ -1,43 +1,55 @@
-function openWebSocket(url) {
-	if (!'WebSocket' in window) {
-		alert('No support for web sockets.');
-		return;
-	}
+define(["EventDispatcher"], function (eventDispatcher) {
+    var Socket = function () {
+        this.socket = null;
+    };
 
-	try {
-		socket = new WebSocket(url);
-		socket.onopen = connectionOpened;
-		socket.onmessage = messageReceived;
-		socket.onerror = errorOccured;
-		socket.onclose = connectionClosed;
-		return socket;
-	} catch (exception) {
-		alert('Unexpected error occured. WebSocket could not be opened.');
-	}
-}
+    Socket.prototype = {
+        openWebSocket: function(url) {
+            if (!'WebSocket' in window) {
+                alert('No support for web sockets.');
+                return;
+            }
 
-function connectionOpened() {
-	alert('Connected to ws://localhost:4521/');
-}
+            try {
+                this.socket = new WebSocket(url);
+                this.socket.onopen = connectionOpened;
+                this.socket.onmessage = messageReceived;
+                this.socket.onerror = errorOccured;
+                this.socket.onclose = connectionClosed;
+                return true;
+            } catch(exception) {
+                alert('Unexpected error occured. WebSocket could not be opened.');
+                return false;
+            }
+        },
+        connectionOpened: function() {
+            alert('Connected to ws://localhost:4521/');
+        },
+        messageReceived: function(event) {
+            var response = JSON.parse(event.data);
+            eventDispatcher.trigger("Socket:newData", response);
+            
+        },
+        errorOccured: function() {
+            alert('WebSocket error occurred.');
+        },
+        connectionClosed: function() {
+            alert('Connection to ws://localhost:4521/ has been closed');
+        },
+        broadcast: function(cell) {
+            if (!this.socket || this.socket.readyState != 1)
+                return;
 
-function messageReceived(event) {
-	var response = JSON.parse(event.data);
-	var cell = new Cell(response.x, response.y, response.isAlive);
-	board.drawCell(cell);
-}
+            var message = JSON.stringify(cell);
+            this.socket.send(message);
+        },
+        close:function(){
+            if (!this.socket || this.socket.readyState != 1)
+                return;
+            this.socket.close();
+            this.socket = null;
+        }
+    };
+    return Socket;
+});
 
-function errorOccured() {
-	alert('WebSocket error occurred.');
-}
-
-function connectionClosed() {
-	alert('Connection to ws://localhost:4521/ has been closed');
-}
-
-function broadcast(cell) {
-	if (!socket || socket.readyState != 1)
-		return;
-	
-	var message = JSON.stringify(cell);
-	socket.send(message);
-}
