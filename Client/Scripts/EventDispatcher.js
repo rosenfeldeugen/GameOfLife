@@ -1,8 +1,5 @@
 /*
     This object is used to trigger events globaly into the system.
-    Triggered events (Important!!! this has to be filled in with new events):
-    -stopPagination - used to inform the pagination object that it has to ignore scroll events.
-    -request:updateAlerts - raised when a request state is acknowledge.
 */
 define([], function () {
     GlobalEventClass = function () {
